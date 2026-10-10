@@ -1,0 +1,20 @@
+1) In this lab, our constructor accepts a name and prints an error if that name is in use. However, in a task/worker context as discussed in the lab description, it would be better to guarantee that 
+we choose a worker that is available, and only throw an error if there are no free workers. Discuss how you might implement a system where creating a Unicorn picks an unused name from a predetermined list of names.
+
+Using said context of the workers, the list is the available workers who are able to do a task. Removing a worker from the list would portray that they aren't available, while those on the list are available to 
+do a task. To implement such a system, it's best to have two static vectors, one being for unicorn names available to pick and one that's not available to pick. For those who want to create a unicorn, the program will
+print out available names, and the user will type in which one they want. In the constructor, the name will be removed and placed into the unavailable vector. When not needed anymore or out of scope, the destructor 
+will remove that name and place it back into the available vector. When removing, it will be in a for-loop, checking if the dereferenced name ptr matches within the list and then removes it and places it in the available 
+vector.
+
+
+
+2) Imagine a unicorn also has a fairy companion. When a unicorn is born (constructed), a fairy object is also created, and the fairy has the same name as the unicorn. Now, assume the fairy's lifespan is not 
+tied to its unicorn's. So if a unicorn dies (is destructed), the fairy still exists and has the name. When a unicorn is born, it's name must not match the name of a living unicorn, or a living fairy. Also, 
+unicorns may outlive fairies, and still have the name! Describe at a high level how you would handle implementing this system.
+
+First, I would determine how long a fairy and a unicorn can live. I would create another static vector and a string ptr for the fairy and adjust the constructor to take in two string variables for the name of the
+unicorn and the name of the fairy. I would add in another for-loop to check if a new unicorn/fairy has the same name as an existing fairy/unicorn; if they do, it would fail to create the unicorn, returning nothing.
+I would create two functions if a user wanted to kill off their unicorn and the second one if want to kill off fairy. There would be a for-loop to search for the name and print out a message that the fairy/unicorn 
+lost its magic and change said ptr of the unicorn/fairy to nullptr. Lastly, I would adjust the destructor to search both the fairy and unicorn names within the lists and delete both ptrs.
+
